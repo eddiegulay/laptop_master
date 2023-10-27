@@ -34,6 +34,7 @@
 ## Installing Firebase SDK in a webpage
 
 Add the following to your project file
+
 ```html
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-database.js"><script>
@@ -41,6 +42,7 @@ Add the following to your project file
 ```
 
 Then Add firebase configurations
+
 ```js
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -57,4 +59,5 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 
 ```
+
 you are good to start 🔥
