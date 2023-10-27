@@ -377,7 +377,9 @@
 			productsRef.on("value", function (snapshot) {
 				const products = [];
 				snapshot.forEach(function (childSnapshot) {
-					const product = childSnapshot.val();
+					var productKey = childSnapshot.key;
+					var product = childSnapshot.val();
+					product.key = productKey;
 					products.push(product);
 				});
 
@@ -405,7 +407,7 @@
 							<div class="single-populer-product-img mt40">
 								<img src="${product.image}" alt="Product Image">
 							</div>
-							<h2><a href="#">${product.name}</a></h2>
+							<h2><a href="update.html?key=${product.key}">${product.name}</a></h2>
 							<div class="single-populer-products-para">
 								<p>${product.description}</p>
 							</div>
