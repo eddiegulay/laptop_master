@@ -15,3 +15,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
