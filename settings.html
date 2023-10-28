@@ -31,52 +31,6 @@
 	<!--feature start -->
 	<section id="feature" class="feature">
 
-		<div class="container">
-			<div class="col-sm-12">
-				<div class="h3 text-dark">Add Products</div>
-
-				<div class="card">
-					<div class="card-body">
-						<form id="productForm">
-							<div class="my-3">
-								<label for="name" class="form-label">Name</label>
-								<input type="text" class="form-control" id="name" name="name">
-							</div>
-							<div class="my-3">
-								<label for="description" class="form-label">Description</label>
-								<textarea class="form-control" id="description" name="description"></textarea>
-							</div>
-							<div class="my-3">
-								<label for="image" class="form-label">Image (url)</label>
-								<input type="text" class="form-control" id="image" name="image">
-							</div>
-							<div class="my-3">
-								<label for="price" class="form-label">Price</label>
-								<input type="number" class="form-control" id="price" name="price">
-							</div>
-							<div class="my-3 form-check">
-								<input type="checkbox" class="form-check-input" id="isFeatured" name="isFeatured">
-								<label class="form-check-label" for="isFeatured">Is Featured</label>
-							</div>
-							<div class="my-3 form-check">
-								<input type="checkbox" class="form-check-input" id="newArrival" name="newArrival">
-								<label class="form-check-label" for="newArrival">New Arrival</label>
-							</div>
-							<div class="my-3 form-check">
-								<input type="checkbox" class="form-check-input" id="popular" name="popular">
-								<label class="form-check-label" for="popular">Popular</label>
-							</div>
-							<div class="my-3">
-								<label for="stockAmount" class="form-label">Stock Amount</label>
-								<input type="number" class="form-control" id="stockAmount" name="stockAmount">
-							</div>
-							<button type="submit" class="btn btn-primary mt-5">Save</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<div class="container mt-5">
 			<div class="col-sm-12">
 				<div class="h3 text-dark">Banner Section</div>
@@ -106,34 +60,6 @@
 				</div>
 			</div>
 		</div>
-
-
-		<div class="container mt-5">
-			<div class="col-sm-12">
-				<div class="h3 text-dark">Marketing Section</div>
-				<div class="card">
-					<div class="card-body">
-						<form id="marketingForm">
-							<div class="my-3">
-								<label for="marketingTitle" class="form-label">Marketing Title</label>
-								<input type="text" class="form-control" id="marketingTitle" name="marketingTitle">
-							</div>
-							<div class="my-3">
-								<label for="marketingDescription" class="form-label">Marketing Description</label>
-								<textarea class="form-control" id="marketingDescription"
-									name="marketingDescription"></textarea>
-							</div>
-							<div class="my-3">
-								<label for="marketingImage" class="form-label">Marketing Image (url)</label>
-								<input type="text" class="form-control" id="marketingImage" name="marketingImage">
-							</div>
-							<button type="submit" class="btn btn-primary mt-5">Submit</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
 
 	</section><!--/.feature-->
 	<!--feature end -->
@@ -184,69 +110,6 @@
 
 
 	<script>
-
-		// upload file to firebase storage
-		function uploadFile(file) {
-			const ref = firebase.storage().ref('products/' + file.name);
-			const task = ref.put(file);
-
-			return new Promise((resolve, reject) => {
-				task.on('state_changed',
-					(snapshot) => {
-						// progress
-						const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-						console.log('Upload is ' + progress + '% done');
-					},
-					(error) => {
-						// error
-						reject(error);
-					},
-					() => {
-						// complete
-						task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-							resolve(downloadURL);
-						});
-					}
-				);
-			});
-		}
-
-	
-		// Handle the form submission
-		document.getElementById("productForm").addEventListener("submit", function (event) {
-			event.preventDefault();
-
-			// Get form input values
-			const name = document.getElementById("name").value;
-			const description = document.getElementById("description").value;
-			const image = document.getElementById("image").value; // Handle file upload differently
-			const price = parseFloat(document.getElementById("price").value);
-			const isFeatured = document.getElementById("isFeatured").checked;
-			const newArrival = document.getElementById("newArrival").checked;
-			const popular = document.getElementById("popular").checked;
-			const stockAmount = parseInt(document.getElementById("stockAmount").value);
-
-			// Create a product object
-			const product = {
-				name: name,
-				description: description,
-				image: image,
-				price: price,
-				isFeatured: isFeatured,
-				newArrival: newArrival,
-				popular: popular,
-				stockAmount: stockAmount
-			};
-
-			// Push the product data to Firebase
-			const productsRef = database.ref("products");
-			productsRef.push(product);
-
-			// Optionally, clear the form after submission
-			this.reset();
-		});
-
-
 		// Handle the banner form submission
 		document.getElementById("bannerForm").addEventListener("submit", function (event) {
 			event.preventDefault();
@@ -298,27 +161,6 @@
 		});
 
 
-	</script>
-
-
-	<script>
-
-
-		// Handle file input on change
-		document.getElementById("image").addEventListener("change", function (event) {
-			event.preventDefault();
-
-			// Get file
-			const file = event.target.files[0];
-
-			// Upload file and get URL
-			uploadFile(file).then((url) => {
-				// Set image URL
-				document.getElementById("image").value = url;
-			}).catch((error) => {
-				console.log(error);
-			});
-		});
 	</script>
 
 </body>

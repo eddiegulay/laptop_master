@@ -387,7 +387,7 @@
 
 			// Loop through the products and create HTML elements for each product
 			products.forEach(function (product) {
-				if(product.popular){
+				if (product.popular) {
 					const productDiv = document.createElement("div");
 					productDiv.className = "col-sm-12 col-md-4 my-1";
 
@@ -422,18 +422,25 @@
 				const productDiv = document.createElement("div");
 				productDiv.className = "col-md-3 col-sm-4 my-1";
 
+				var stockStatus = product.stockAmount;
+				var actionText = "Buy Now";
+				if (product.stockAmount < 1){
+					stockStatus = "Out of Stock";
+					actionText = "Out of Stock";
+				}
+
 				productDiv.innerHTML = `
 					<div class="single-new-arrival">
 						<div class="single-new-arrival-bg">
 							<img src="${product.image}" alt="Product Image">
 							<div class="single-new-arrival-bg-overlay"></div>
 							<div class="sale bg-1">
-								<p>sale</p>
+								<p>${stockStatus}</p>
 							</div>
 							<div class="new-arrival-cart">
 								<p>
 									<span class="lnr lnr-cart"></span>
-									<a href="#">add <span>to </span> cart</a>
+									<span class="" onclick="updateStockAmount('${product.key}', ${product.stockAmount -1})" style="cursor:pointer;">${actionText}</span>
 								</p>
 								<p class="arrival-review pull-right">
 									<span class="lnr lnr-heart"></span>
@@ -453,6 +460,33 @@
 		// Call fetchProductsRealTime with the displayAndUpdateProducts callback
 		fetchProductsRealTime(displayAndUpdateProducts);
 		fetchProductsRealTime(displayAndUpdateAllProducts);
+
+
+		// Function to update the stock amount of a specific product
+		function updateStockAmount(productKey, newStockAmount) {
+			if (newStockAmount < 0) {
+				alert("This Product is out of stock.");
+				return;
+			}
+
+			const productRef = productsRef.child(productKey);
+
+			// Create an object with the new stock amount
+			const updatedData = {
+				stockAmount: newStockAmount
+			};
+
+			// Use the update method to change the stock amount
+			productRef.update(updatedData, function (error) {
+				if (error) {
+				console.error("Stock amount could not be updated: " + error);
+				alert("Stock amount could not be updated: ");
+				} else {
+				console.log("Item Bought.");
+				alert("Stock amount updated successfully.")
+				}
+			});
+		}
 
 	</script>
 
