@@ -1,5 +1,5 @@
 /****
- * Installing firebase
+ * Initializing Firebase
 ****/
 
 const firebaseConfig = {
@@ -15,5 +15,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
-var database = firebase.database();
-// var storage = firebase.getStorage();
+const database = firebase.database();

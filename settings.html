@@ -178,12 +178,40 @@
 	<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-database.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-storage.js"></script>
 
 	<script src="firebase.js"></script>
 
 
 	<script>
 
+		// upload file to firebase storage
+		function uploadFile(file) {
+			const ref = firebase.storage().ref('products/' + file.name);
+			const task = ref.put(file);
+
+			return new Promise((resolve, reject) => {
+				task.on('state_changed',
+					(snapshot) => {
+						// progress
+						const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+						console.log('Upload is ' + progress + '% done');
+					},
+					(error) => {
+						// error
+						reject(error);
+					},
+					() => {
+						// complete
+						task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+							resolve(downloadURL);
+						});
+					}
+				);
+			});
+		}
+
+	
 		// Handle the form submission
 		document.getElementById("productForm").addEventListener("submit", function (event) {
 			event.preventDefault();
@@ -270,6 +298,27 @@
 		});
 
 
+	</script>
+
+
+	<script>
+
+
+		// Handle file input on change
+		document.getElementById("image").addEventListener("change", function (event) {
+			event.preventDefault();
+
+			// Get file
+			const file = event.target.files[0];
+
+			// Upload file and get URL
+			uploadFile(file).then((url) => {
+				// Set image URL
+				document.getElementById("image").value = url;
+			}).catch((error) => {
+				console.log(error);
+			});
+		});
 	</script>
 
 </body>
