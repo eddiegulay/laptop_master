@@ -17,6 +17,7 @@
     - [Reading Data](#reading-data)
     - [Updating Data](#updating-data)
     - [Deleting Data](#deleting-data)
+    - [Resources](#resources)
 
 
 ## Git Flow in Project Management
@@ -237,3 +238,7 @@ var productKey = "-MgZ2Z2Z2Z2Z2Z2Z2Z2";
 database.ref("products/" + productKey).remove();
 ```
 
+### Resources
+
+- [Firebase Docs 🔗](https://firebase.google.com/docs)
+- [Firebase Realtime Database Fundamentals (youtube) 🔗](https://youtu.be/pP7quzFmWBY)
