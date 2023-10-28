@@ -243,3 +243,4 @@ database.ref("products/" + productKey).remove();
 
 - [Firebase Docs 🔗](https://firebase.google.com/docs)
 - [Firebase Realtime Database Fundamentals (youtube) 🔗](https://youtu.be/pP7quzFmWBY)
+- [Template Used: Furn Master](https://www.themesine.com/downloads/furn-free-ecommerce-html5-template/)
