@@ -136,31 +136,6 @@
 			this.reset();
 		});
 
-		// Handle the marketing form submission
-		document.getElementById("marketingForm").addEventListener("submit", function (event) {
-			event.preventDefault();
-
-			// Get form input values
-			const marketingTitle = document.getElementById("marketingTitle").value;
-			const marketingDescription = document.getElementById("marketingDescription").value;
-			const marketingImage = document.getElementById("marketingImage").value; // Handle file upload differently
-
-			// Create a marketing object
-			const marketing = {
-				marketingTitle: marketingTitle,
-				marketingDescription: marketingDescription,
-				marketingImage: marketingImage
-			};
-
-			// Push the marketing data to Firebase
-			const marketingRef = database.ref("marketing");
-			marketingRef.push(marketing);
-
-			// Optionally, clear the form after submission
-			this.reset();
-		});
-
-
 	</script>
 
 </body>
