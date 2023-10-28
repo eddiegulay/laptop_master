@@ -155,6 +155,7 @@ const firebaseConfig = {
 
 ```js
 const app = firebase.initializeApp(firebaseConfig);
+const database = app.database();
 ```
 
 you are good to start 🔥
